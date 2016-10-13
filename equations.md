@@ -49,8 +49,9 @@ public class Main {
             } else {
                 double d = ((Math.pow(b, 2)) - 4 * a * c);
                 System.out.println("Дискриминант: D = " + d);
-                if (d < 0)
+                if (d < 0) {
                     System.out.println("Уравнение не имеет решения");
+                    break; }
                 else {
                     double x1 = ((-b + Math.sqrt(d)) / 2 * a), x2 = ((-b - Math.sqrt(d)) / 2 * a);
                     System.out.println("Решение уравнения:\t");
