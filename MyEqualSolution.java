@@ -20,6 +20,7 @@ public class MyEqualSolution {
     }
 
     public static void linearSolution() {
+        Scanner sc = new Scanner(System.in);
         while(true) {
             System.out.println("Введите коэфициенты линейного уравнения:\n");
             System.out.println("Введите a:\n");
@@ -39,6 +40,7 @@ public class MyEqualSolution {
     }
 
     public static void squareSolution() {
+        Scanner sc = new Scanner(System.in);
         while (true) {
             System.out.println("Введите коэфициенты:\n");
             System.out.println("Введите a:\n");
