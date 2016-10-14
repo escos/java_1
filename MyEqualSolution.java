@@ -23,15 +23,15 @@ public class MyEqualSolution {
         while(true) {
             System.out.println("Введите коэфициенты линейного уравнения:\n");
             System.out.println("Введите a:\n");
-            double a = sc.nextDouble();
+            float a = sc.nextFloat();
             if (a == 0) {
                 System.out.println("Коэффициент введен не верно!");
                 continue;
             } else {
                 System.out.println("Введите b:\n");
-                double b = sc.nextDouble();
+                float b = sc.nextFloat();
                 System.out.println("Коэффициенты: a = " + a + "\tb = " + b);
-                double x=-b/a;
+                float x=-b/a;
                 System.out.printf("Решение уравнения: х = %.1f\n", x);
                 break;
             }
@@ -42,15 +42,15 @@ public class MyEqualSolution {
         while (true) {
             System.out.println("Введите коэфициенты:\n");
             System.out.println("Введите a:\n");
-            double a = sc.nextDouble();
+            float a = sc.nextFloat();
             if (a == 0) {
                 System.out.println("Решение линейного уравнения (частный случай квадратного):");
                 linearSolution();
             } else {
                 System.out.println("Введите b:\n");
-                double b = sc.nextDouble();
+                float b = sc.nextFloat();
                 System.out.println("Введите с:\n");
-                double c = sc.nextDouble();
+                float c = sc.nextFloat();
                 System.out.println(" a = " + a + "\tb = " + b + "\tc = " + c);
                 double d = ((Math.pow(b, 2)) - 4 * a * c);
                 System.out.println("Дискриминант: D = " + d);
