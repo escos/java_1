@@ -32,7 +32,7 @@ public class MyEqualSolution {
                 System.out.println("Введите b:\n");
                 double b = sc.nextDouble();
                 System.out.println("Коэффициенты: a = " + a + "\tb = " + b);
-                float x=-b/a;
+                double x=-b/a;
                 System.out.printf("Решение уравнения: х = %.1f\n", x);
                 break;
             }
@@ -44,15 +44,15 @@ public class MyEqualSolution {
         while (true) {
             System.out.println("Введите коэфициенты:\n");
             System.out.println("Введите a:\n");
-            float a = sc.nextDouble();
+            double a = sc.nextDouble();
             if (a == 0) {
                 System.out.println("Решение линейного уравнения (частный случай квадратного):");
                 linearSolution();
             } else {
                 System.out.println("Введите b:\n");
-                float b = sc.nextDouble();
+                double b = sc.nextDouble();
                 System.out.println("Введите с:\n");
-                float c = sc.nextDouble();
+                double c = sc.nextDouble();
                 System.out.println(" a = " + a + "\tb = " + b + "\tc = " + c);
                 double d = ((Math.pow(b, 2)) - 4 * a * c);
                 System.out.println("Дискриминант: D = " + d);
