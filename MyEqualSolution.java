@@ -1,7 +1,7 @@
 import java.util.Scanner;
 public class MyEqualSolution {
+   static Scanner sc = new Scanner(System.in);
    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
         while (true) {
             System.out.printf("Выберите вид уравнения (1 - линейное, 2 - квадратное):\n ");
             int i = sc.nextInt();
@@ -20,7 +20,6 @@ public class MyEqualSolution {
     }
 
     public static void linearSolution() {
-        Scanner sc = new Scanner(System.in);
         while(true) {
             System.out.println("Введите коэфициенты линейного уравнения:\n");
             System.out.println("Введите a:\n");
@@ -40,7 +39,6 @@ public class MyEqualSolution {
     }
 
     public static void squareSolution() {
-        Scanner sc = new Scanner(System.in);
         while (true) {
             System.out.println("Введите коэфициенты:\n");
             System.out.println("Введите a:\n");
