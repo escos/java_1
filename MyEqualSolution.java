@@ -24,13 +24,13 @@ public class MyEqualSolution {
         while(true) {
             System.out.println("Введите коэфициенты линейного уравнения:\n");
             System.out.println("Введите a:\n");
-            float a = sc.nextDouble();
+            double a = sc.nextDouble();
             if (a == 0) {
                 System.out.println("Коэффициент введен не верно!");
                 continue;
             } else {
                 System.out.println("Введите b:\n");
-                float b = sc.nextDouble();
+                double b = sc.nextDouble();
                 System.out.println("Коэффициенты: a = " + a + "\tb = " + b);
                 float x=-b/a;
                 System.out.printf("Решение уравнения: х = %.1f\n", x);
