@@ -50,8 +50,9 @@ public class MyMultitable {
                             System.out.println("Аргумент второй = " + b);
                             if (b > 0) {
                                 multiTable(a, b);
-                            }
+                            } else {
                             System.out.println("Аргумент 2 введен не корректно, необходимо ввести значение больше нуля!");
+                            }
                         } catch (NumberFormatException e) {
                             System.out.println("Аргумент второй введен некорректно!!");
                         }
