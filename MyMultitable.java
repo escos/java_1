@@ -14,6 +14,7 @@ public class MyMultitable {
                 break;
             default:
                 System.out.println("Введено слишком много аргументов!");
+                break;
         }
     }
 
