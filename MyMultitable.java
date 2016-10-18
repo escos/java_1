@@ -1,5 +1,3 @@
-package com.company;
-
 public class MyMultitable {
     public static void main(String[] args) {
         switch (args.length) {
