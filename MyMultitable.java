@@ -5,70 +5,50 @@ public class MyMultitable {
                 System.out.println("Аргументы не введены!");
                 break;
             case 1:
-                checkingFirst(args[0]);
+                System.out.println("Введен один аргумент, необходимо ввести второй!");
                 break;
             case 2:
-                checkingArgs(args[0], args[1]);
+                checkParseArgs(args[0], args[1]);
                 break;
             default:
                 System.out.println("Введено слишком много аргументов!");
-                break;
         }
     }
 
-    public static void checkingFirst(String x) {
-        int a;
+    public static void checkParseArgs(String x, String y) {
         try {
-            a = Integer.parseInt(x);
-            System.out.println("Аргумент первый = " + a);
-            if (a > 0) {
-                System.out.println("Необходимо ввести второй аргумент!");
-            } else {
-                System.out.println("Аргумент 1 введен не корректно, необходимо ввести значение больше нуля!");
-                System.out.println("Повторите ввод аргументов!");
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Аргумент первый введен некорректно!!");
-            System.out.println("Повторите ввод аргументов!");
-        }
-    }
-
-    public static void checkingArgs(String x, String y) {
-        int a, b;
-        try {
+            int a;
             a = Integer.parseInt(x);
             System.out.println("Аргумент первый = " + a);
             if (a > 0) {
                 try {
+                    int b;
                     b = Integer.parseInt(y);
                     System.out.println("Аргумент второй = " + b);
-                    if (b > 0)
-                        multiTable(a, b);
-                    else
-                        System.out.println("Аргумент 2 введен не корректно, необходимо ввести значение больше нуля!");
+                    if (b > 0) {
+                        showMultiplicateTable(a, b);
+                    } else {
+                        System.out.println("Аргумент второй введен не корректно, необходимо ввести значение больше нуля!");
+                        System.out.println("Повторите ввод второго аргумента!");
+                    }
                 } catch (NumberFormatException e) {
-                    System.out.println("Аргумент второй введен некорректно!!");
+                    System.out.println("Аргумент второй введен некорректно, формат не соответствут int!");
+                    System.out.println("Повторите ввод второго аргумента!");
                 }
             } else {
-                System.out.println("Аргумент 1 введен не корректно, необходимо ввести значение больше нуля!");
-                System.out.println("Повторите ввод аргументов!");
+                System.out.println("Аргумент первый введен не корректно, необходимо ввести значение больше нуля!");
+                System.out.println("Повторите ввод первого аргумента!");
             }
         } catch (NumberFormatException e) {
-            System.out.println("Аргумент первый введен некорректно!!");
-            System.out.println("Повторите ввод аргументов!");
+            System.out.println("Аргумент первый введен некорректно, формат введенного аргумента не соответствует int!");
+            System.out.println("Повторите ввод первого аргумента!");
         }
     }
 
-    public static void multiTable(int k, int m) {
+    public static void showMultiplicateTable(int k, int m) {
+        int min = Math.min(k, m);
+        int max = Math.max(k, m);
         if (k != m) {
-            int min, max;
-            if (Math.min(k, m) == k) {
-                min = k;
-                max = m;
-            } else {
-                min = m;
-                max = k;
-            }
             for (int i = min; i < (max + 1); i++) {
                 for (int j = min; j < (max + 1); j++) {
                     System.out.printf("   %5d", (i * j));
