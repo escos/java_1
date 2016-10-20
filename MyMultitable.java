@@ -8,40 +8,18 @@ public class MyMultitable {
                 System.out.println("Введен один аргумент, необходимо ввести второй!");
                 break;
             case 2:
-                checkParseArgs(args[0], args[1]);
+                parseArgument(args[0]);
+                parseArgument(args[1]);
+                int number1 = parseArgument(args[0]);
+                int number2 = parseArgument(args[1]);
+                checkArguments(number1);
+                checkArguments(number2);
+                int argument1 = checkArguments(number1);
+                int argument2 = checkArguments(number2);
+                showMultiplicateTable(argument1,argument2);
                 break;
             default:
                 System.out.println("Введено слишком много аргументов!");
-        }
-    }
-
-    public static void checkParseArgs(String x, String y) {
-        try {
-            int a;
-            a = Integer.parseInt(x);
-            System.out.println("Аргумент первый = " + a);
-            if (a > 0) {
-                try {
-                    int b;
-                    b = Integer.parseInt(y);
-                    System.out.println("Аргумент второй = " + b);
-                    if (b > 0) {
-                        showMultiplicateTable(a, b);
-                    } else {
-                        System.out.println("Аргумент второй введен не корректно, необходимо ввести значение больше нуля!");
-                        System.out.println("Повторите ввод второго аргумента!");
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("Аргумент второй введен некорректно, формат не соответствут int!");
-                    System.out.println("Повторите ввод второго аргумента!");
-                }
-            } else {
-                System.out.println("Аргумент первый введен не корректно, необходимо ввести значение больше нуля!");
-                System.out.println("Повторите ввод первого аргумента!");
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Аргумент первый введен некорректно, формат введенного аргумента не соответствует int!");
-            System.out.println("Повторите ввод первого аргумента!");
         }
     }
 
@@ -49,6 +27,7 @@ public class MyMultitable {
         int min = Math.min(k, m);
         int max = Math.max(k, m);
         if (k != m) {
+            System.out.println("Таблица умножения от "+min+" до "+max+" имеет вид:\n");
             for (int i = min; i < (max + 1); i++) {
                 for (int j = min; j < (max + 1); j++) {
                     System.out.printf("   %5d", (i * j));
@@ -57,5 +36,29 @@ public class MyMultitable {
             }
         } else
             System.out.println("Произведение равно: " + (k * m));
+    }
+
+    public static int parseArgument(String number) {
+
+        try {
+            int arg = Integer.parseInt(number);
+            return arg;
+        } catch (NumberFormatException e) {
+            System.out.println("Аргумент(ы) введен(ы) некорректно, формат не соответствут int!");
+            System.out.println("Повторите ввод аргумента!");
+            System.exit(0);
+            return -1;
+        }
+    }
+
+    public static int checkArguments(int factor) {
+        if (factor <= 0) {
+            System.out.println("Аргумент "+factor+" введен не корректно, необходимо ввести значение больше нуля!");
+            System.out.println("Повторите ввод аргумента!");
+            System.exit(0);
+            return 1;
+        } else {
+            return factor;
+        }
     }
 }
