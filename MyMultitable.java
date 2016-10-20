@@ -47,7 +47,7 @@ public class MyMultitable {
             System.out.println("Аргумент(ы) введен(ы) некорректно, формат не соответствут int!");
             System.out.println("Повторите ввод аргумента!");
             System.exit(0);
-            return -1;
+            return 1;
         }
     }
 
