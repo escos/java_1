@@ -2,110 +2,139 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Sort {
+    static Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
-        fillArray();
-        findMinimum();
-        findMaximum();
-        sortBubbleArray();
-        findAverageValue();
-        findNumber();
+        System.out.println("Выберите функцию (необходимо ввести число от 0 до 5)");
+        byte var = sc.nextByte();
+        switch (var) {
+            case 0:
+                fillArray();
+                break;
+            case 1:
+                findMinimum();
+                break;
+            case 2:
+                findMaximum();
+                break;
+            case 3:
+                findAverageValue();
+                break;
+            case 4:
+                findNumber();
+                break;
+            case 5:
+                sortBubbleArray();
+                break;
+            default:
+                System.out.println("Число введено не верно!");
+                break;
+        }
     }
 
     public static void fillArray() {
-        Random mymas = new Random();
+        Random gen = new Random();
         float a[] = new float[10];
-        // Заполняем начальными значениями
+        System.out.println("Массив вещественных значений:\n");
         for (int i = 0; i < a.length; i++) {
-            a[i] = mymas.nextFloat();
-            System.out.println(a[i]);
+            a[i] = gen.nextFloat();
+            System.out.printf("%.3f\b",a[i]);
         }
     }
 
     public static void sortBubbleArray() {
-        Random mymas1 = new Random();
+        Random gen = new Random();
         int a[] = new int[10];
+        System.out.println("Неотсортированный массив:");
         for (int i = 0; i < a.length; i++) {
-            a[i] = mymas1.nextInt(100);
+            a[i] = gen.nextInt(100);
+            System.out.printf("\b%d\b",a[i]);
         }
-        for (int i = 0; i < a.length; i++) {
-            if (a[i] > a[i + 1]) {
-                int temp = a[i];
-                a[i] = a[i + 1];
-                a[i + 1] = temp;
+        for (int i = a.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (a[j] > a[j + 1]) {
+                    int temp = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = temp;
+                }
             }
+        }
+        System.out.println("");
+        System.out.println("Отсортированный массив:");
+        for (int i = 0; i < a.length; i++) {
+            System.out.printf("\b%d\b",a[i]);
         }
     }
 
     public static void findMinimum() {
-        // Создаем генератор случайных чисел
         Random gen = new Random();
         int a[] = new int[10];
-        // Заполняем начальными значениями
         for (int i = 0; i < a.length; i++) {
             a[i] = gen.nextInt(100);
+            System.out.printf("%d\b",a[i]);
         }
-        for (int i = 0; i < a.length; i++) {
-            for (int j = i + 1; j < a.length; j++) {
-                if (a[i] > a[j]) {
-                    int temp = a[i];
-                    a[i] = a[j];
-                    a[j] = temp;
-                }
+        int min = a[0];
+        for (int i = 1; i < a.length; i++) {
+            if (a[i] < min) {
+                min = a[i];
             }
         }
-        System.out.println(a[0]);
+        System.out.println("");
+        System.out.println("Минимальное значение массива = " + min);
     }
 
     public static void findMaximum() {
-        // Создаем генератор случайных чисел
         Random gen = new Random();
         int a[] = new int[10];
-        // Заполняем начальными значениями
         for (int i = 0; i < a.length; i++) {
             a[i] = gen.nextInt(100);
+            System.out.printf("%d\b",a[i]);
         }
-        for (int i = 0; i < a.length; i++) {
-            for (int j = i + 1; j < a.length; j++) {
-                if (a[i] < a[j]) {
-                    int temp = a[i];
-                    a[i] = a[j];
-                    a[j] = temp;
-                }
+        int max = a[0];
+        for (int i = 1; i < a.length; i++) {
+            if (a[i] > max) {
+                max = a[i];
             }
         }
-        System.out.println(a[0]);
+        System.out.println("");
+        System.out.println("Максимальное значение массива = " + max);
     }
 
     public static void findAverageValue() {
-        Random mymas2 = new Random();
+        Random gen = new Random();
         int a[] = new int[10];
         for (int i = 0; i < a.length; i++) {
-            a[i] = mymas2.nextInt(100);
+            a[i] = gen.nextInt(10);
+            System.out.printf("%d\b",a[i]);
         }
-        int summ = 0;
+        float summa = 0;
         for (int i = 0; i < a.length; i++) {
-            summ = +a[i];
-            System.out.println(a[i]);
+            summa += a[i];
         }
-        int average = summ / a.length;
-        System.out.println(summ + " " + average);
+        float average = summa / a.length;
+        System.out.println("");
+        System.out.printf("Среднее арифметическое массива = %.1f",average);
     }
 
     public static void findNumber() {
-        Random mymas2 = new Random();
+        Random gen = new Random();
         int a[] = new int[10];
         for (int i = 0; i < a.length; i++) {
-            a[i] = mymas2.nextInt(100);
+            a[i] = gen.nextInt(100);
+            System.out.printf("%d\b",a[i]);
         }
-        Scanner sc = new Scanner(System.in);
+        System.out.printf("");
+        System.out.println("Введите искомое число");
         int number = sc.nextInt();
         int count = 0;
-        for (int i = 0; i < a.length ; i++) {
+        for (int i = 0; i < a.length; i++) {
             if (a[i] == number) {
                 count++;
             }
         }
-        System.out.println(count);
+        if (count == 0)
+            System.out.println("Числа " + number + " в данном массиве нет!");
+        else
+            System.out.println("В массиве встречается " + count + " раз число " + number);
     }
-
 }
