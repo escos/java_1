@@ -41,15 +41,13 @@ public class MyMultitable {
                 System.out.println("Аргумент " + arg + " введен не корректно, необходимо ввести значение больше нуля!");
                 System.out.println("Повторите ввод данного аргумента!");
                 System.exit(0);
-                return 1;
-            } else {
-                return arg;
             }
+            return arg;
         } catch (NumberFormatException e) {
             System.out.println("Аргумент " + number + " введен некорректно, формат не соответствут целочисленному!");
             System.out.println("Повторите ввод данного аргумента!");
             System.exit(0);
-            return 1;
         }
+        return -1;
     }
 }
