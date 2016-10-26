@@ -1,11 +1,10 @@
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Sort {
     static Scanner sc = new Scanner(System.in);
-
     public static void main(String[] args) {
-        int[] massive = generationRandomArray();
         System.out.println("Выберите  функцию обработки массива(необходимо ввести число от 0 до 5):");
         System.out.println("           0 - заполнение массива вещественными числами");
         System.out.println("           1 - нахождение минимального значения сгенерированного массива целых чисел");
@@ -16,22 +15,37 @@ public class Sort {
         byte var = sc.nextByte();
         switch (var) {
             case 0:
-                fillArray();
+                fillArrayRealNumbers(); // заполнение массива вещественными значениями
                 break;
             case 1:
-                findMinimum(massive);
+                int[] array = generationRandomArray(); // генерация массива случайными числами
+                System.out.println("Сгенерированный массив:");
+                System.out.println(Arrays.toString(array));
+                findMinimum(array); // поиск минимума в массиве
                 break;
             case 2:
-                findMaximum(massive);
+                array = generationRandomArray(); // генерация массива случайными числами
+                System.out.println("Сгенерированный массив:");
+                System.out.println(Arrays.toString(array));
+                findMaximum(array); // поиск максисума в массиве
                 break;
             case 3:
-                findAverageValue(massive);
+                array = generationRandomArray(); // генерация массива случайными числами
+                System.out.println("Сгенерированный массив:");
+                System.out.println(Arrays.toString(array));
+                findAverageValue(array); // нахождения среднего арифметического элементов массива
                 break;
             case 4:
-                findNumber(massive);
+                array = generationRandomArray(); // генерация массива случайными числами
+                System.out.println("Сгенерированный массив:");
+                System.out.println(Arrays.toString(array));
+                findNumber(array); // нахождение заданного числа в массиве и количетво таких чисел
                 break;
             case 5:
-                sortByBubbleMethod(massive);
+                array = generationRandomArray(); // генерация массива случайными числами
+                System.out.println("Сгенерированный массив:");
+                System.out.println(Arrays.toString(array));
+                sortByBubbleMethod(array); // сортировка массива методом "пузырька"
                 break;
             default:
                 System.out.println("Число введено не верно!");
@@ -39,14 +53,14 @@ public class Sort {
         }
     }
 
-    public static void fillArray() {
+    public static void fillArrayRealNumbers() {
         Random gen = new Random();
         float a[] = new float[10];
         System.out.println("Массив вещественных значений:");
         for (int i = 0; i < a.length; i++) {
             a[i] = gen.nextFloat();
-            System.out.printf("%.3f\t",a[i]);
         }
+        System.out.println(Arrays.toString(a));
     }
 
     public static void sortByBubbleMethod(int a[]) {
@@ -62,7 +76,7 @@ public class Sort {
         System.out.println("");
         System.out.println("Отсортированный массив:");
         for (int i = 0; i < a.length; i++) {
-            System.out.printf("\b%d\b",a[i]);
+            System.out.printf("\b%d\b", a[i]);
         }
     }
 
@@ -95,7 +109,7 @@ public class Sort {
         }
         float average = summa / a.length;
         System.out.println("");
-        System.out.printf("Среднее арифметическое массива = %.1f",average);
+        System.out.printf("Среднее арифметическое массива = %.1f", average);
     }
 
     public static void findNumber(int a[]) {
@@ -117,12 +131,9 @@ public class Sort {
     public static int[] generationRandomArray() {
         Random gen = new Random();
         int a[] = new int[10];
-        System.out.println("Сгенерированный массив:");
         for (int i = 0; i < a.length; i++) {
             a[i] = gen.nextInt(100);
-            System.out.printf("%d\t",a[i]);
         }
-        System.out.println("");
         return a;
     }
 }
