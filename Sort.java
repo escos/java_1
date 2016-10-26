@@ -18,34 +18,19 @@ public class Sort {
                 fillArrayRealNumbers(); // заполнение массива вещественными значениями
                 break;
             case 1:
-                int[] array = generationRandomArray(); // генерация массива случайными числами
-                System.out.println("Сгенерированный массив:");
-                System.out.println(Arrays.toString(array));
-                findMinimum(array); // поиск минимума в массиве
+                findMinimum(generateRandomArray()); // поиск минимума в массиве
                 break;
             case 2:
-                array = generationRandomArray(); // генерация массива случайными числами
-                System.out.println("Сгенерированный массив:");
-                System.out.println(Arrays.toString(array));
-                findMaximum(array); // поиск максисума в массиве
+                findMaximum(generateRandomArray()); // поиск максисума в массиве
                 break;
             case 3:
-                array = generationRandomArray(); // генерация массива случайными числами
-                System.out.println("Сгенерированный массив:");
-                System.out.println(Arrays.toString(array));
-                findAverageValue(array); // нахождения среднего арифметического элементов массива
+                findAverageValue(generateRandomArray()); // нахождения среднего арифметического элементов массива
                 break;
             case 4:
-                array = generationRandomArray(); // генерация массива случайными числами
-                System.out.println("Сгенерированный массив:");
-                System.out.println(Arrays.toString(array));
-                findNumber(array); // нахождение заданного числа в массиве и количетво таких чисел
+                findNumber(generateRandomArray()); // нахождение заданного числа в массиве и количетво таких чисел
                 break;
             case 5:
-                array = generationRandomArray(); // генерация массива случайными числами
-                System.out.println("Сгенерированный массив:");
-                System.out.println(Arrays.toString(array));
-                sortByBubbleMethod(array); // сортировка массива методом "пузырька"
+                sortByBubbleMethod(generateRandomArray()); // сортировка массива методом "пузырька"
                 break;
             default:
                 System.out.println("Число введено не верно!");
@@ -64,6 +49,8 @@ public class Sort {
     }
 
     public static void sortByBubbleMethod(int a[]) {
+        System.out.println("Сгенерированный массив:");
+        System.out.println(Arrays.toString(a));
         for (int i = a.length - 1; i > 0; i--) {
             for (int j = 0; j < i; j++) {
                 if (a[j] > a[j + 1]) {
@@ -81,6 +68,8 @@ public class Sort {
     }
 
     public static void findMinimum(int a[]) {
+        System.out.println("Сгенерированный массив:");
+        System.out.println(Arrays.toString(a));
         int min = a[0];
         for (int i = 1; i < a.length; i++) {
             if (a[i] < min) {
@@ -92,6 +81,8 @@ public class Sort {
     }
 
     public static void findMaximum(int a[]) {
+        System.out.println("Сгенерированный массив:");
+        System.out.println(Arrays.toString(a));
         int max = a[0];
         for (int i = 1; i < a.length; i++) {
             if (a[i] > max) {
@@ -103,6 +94,8 @@ public class Sort {
     }
 
     public static void findAverageValue(int a[]) {
+        System.out.println("Сгенерированный массив:");
+        System.out.println(Arrays.toString(a));
         float summa = 0;
         for (int i = 0; i < a.length; i++) {
             summa += a[i];
@@ -113,6 +106,8 @@ public class Sort {
     }
 
     public static void findNumber(int a[]) {
+        System.out.println("Сгенерированный массив:");
+        System.out.println(Arrays.toString(a));
         System.out.printf("");
         System.out.println("Введите искомое число");
         int number = sc.nextInt();
@@ -128,7 +123,7 @@ public class Sort {
             System.out.println("В массиве встречается " + count + " раз число " + number);
     }
 
-    public static int[] generationRandomArray() {
+    public static int[] generateRandomArray() {
         Random gen = new Random();
         int a[] = new int[10];
         for (int i = 0; i < a.length; i++) {
