@@ -9,8 +9,6 @@ public class MyMultitable {
                 System.out.println("Программа выведет таблицу умножения от m до n, если введены оба аргумента m и n.");
                 break;
             case 2:
-                parseAndCheckArgument(args[0]);
-                parseAndCheckArgument(args[1]);
                 int number1 = parseAndCheckArgument(args[0]);
                 int number2 = parseAndCheckArgument(args[1]);
                 showMultiplicateTable(number1, number2);
