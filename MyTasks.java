@@ -1,49 +1,84 @@
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Scanner;
+
+
 public class MyTasks {
-    public static ArrayList createMyList() {
-        ArrayList<String> tasks = new ArrayList();
-        tasks.add("Задача №1");
-        tasks.add("Задача №2");
-        tasks.add("Задача №3");
-        tasks.add("Задача №4");
-        tasks.add("Задача №5");
-        tasks.add("Задача №6");
-        tasks.add("Задача №7");
-        System.out.println(tasks);
-        System.out.println("Добавляем первый элемент в список: дополнительная задача ");
-        tasks.add(0, "Дополнительная задача");
-        System.out.println(tasks);
-        return tasks;
+    final static int N = 10;
+    int size = 0;
+    static Scanner sc = new Scanner(System.in);
+    private Task[] tasks = new Task[N];
+    static SimpleDateFormat format1 = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+
+    public static void main(String[] args) {
+        MyTasks taskList = new MyTasks();
+        boolean id = true;
+        while (id) {
+            System.out.println("Введите команду:");
+            String command = sc.next();
+            switch (command) {
+                case "ADD":
+                    Task task1 = MyTasks.createtask();
+                    taskList.add(task1);
+                    id = true;
+                    break;
+                default:
+                    System.out.println("Команда введена не верно");
+                    id = false;
+                    break;
+            }
+        }
+        System.out.println("Размер списка = " + taskList.size());
+
+        for (int i = 0; i < taskList.size; i++) {
+            System.out.println("Данные "+(i+1)+"-й задачи:");
+            taskList.print(taskList.tasks[i]);
+        }
     }
 
-    // Размер списка задач
-    public static void sizeMyList(ArrayList tasks) {
-        tasks.size();
-        System.out.println("Количество задач в списке " + tasks.size());
+    public enum commands {
+        ADD {
+            public String toString() {
+                return "ADD";
+            }
+        },
+        DELETE {
+            public String toString() {
+                return "DEL";
+            }
+        }
     }
 
-    // Нахождение задачи по индексу
-    public static void getAnimalUseIndex(ArrayList tasks) {
-        System.out.println("Вторая задача с конца " + tasks.get(tasks.size()-3));
-        System.out.println("Индекс задачи = " + (tasks.size()-3));
+    private void print(Task task) {
+        System.out.println("    Дата введения задачи " + format1.format(task.date));
+        System.out.println("    Название задачи: " + task.description);
+        System.out.println("    Содержание задачи: " + task.consist);
     }
 
-    // Удаление задачи из списка
-    public static void deleteAnimal(ArrayList tasks) {
-        System.out.println("Удаляем последний элемент списка");
-        tasks.remove(tasks.size() - 1);
-        System.out.println(tasks);
+    private static Task createtask() {
+        System.out.println("Введите название задачи: ");
+        String description = sc.next();
+        System.out.println("Введите содержание задачи: ");
+        String consist = sc.next();
+        Date date = new Date();
+        Task task = new Task(description, consist, date);
+        return task;
     }
 
-    // Очистка списка задач
-    public static boolean listClear(ArrayList tasks) {
-        tasks.clear();
-        boolean mes;
-        if (tasks.size() == 0)
-            mes = true;
-        else mes = false;
-        System.out.println(mes);
-        return mes;
+    private void add(Task task) {
+        size++;
+        if (tasks.length < size) {
+            Task[] newtasks = new Task[(int) (tasks.length * 1.5)];
+            for (int i = 0; i < newtasks.length; i++) {
+                newtasks[i] = tasks[i];
+            }
+            tasks = newtasks;
+        }
+        tasks[size - 1] = task;
     }
 
+    private int size() {
+        return size;
+    }
 }
