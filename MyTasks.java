@@ -1,8 +1,7 @@
 
 import java.io.IOException;
-import java.util.Date;
+import java.util.*;
 import java.text.*;
-import java.util.Scanner;
 
 public class MyTasks {
     final static int N = 10;
@@ -11,23 +10,45 @@ public class MyTasks {
     private Task[] tasks = new Task[N];
     static SimpleDateFormat format1 = new SimpleDateFormat("dd.MM.yyyy hh:mm");
 
+    public enum Commands {
+        ADD {
+            public String toString() {
+                return "ADD";
+            }
+        },
+        DEL {
+            public String toString() {
+                return "DEL";
+            }
+        }
+    }
+
     public static void main(String[] args) throws IOException, ParseException {
         MyTasks taskList = new MyTasks();
         boolean id = true;
         while (id) {
             System.out.println("Введите команду:");
             String command = sc.next();
-            switch (command) {
-                case "ADD":
-                    Task task1 = MyTasks.createtask();
-                    taskList.add(task1);
-                    id = true;
-                    break;
-                case "DEL":
-                default:
-                    System.out.println("Команда введена не верно");
-                    id = false;
-                    break;
+            try {
+                switch (Commands.valueOf(command)) {
+                    case ADD:
+                        Task task1 = MyTasks.createtask();
+                        taskList.add(task1);
+                        id = true;
+                        break;
+                    case DEL:
+                        System.out.println("кажите номер удаляемого элемента(число от 0 до size-1)");
+                        int j = sc.nextInt();
+                        taskList.delete(j);
+                        break;
+                    default:
+                        System.out.println("Команда введена не верно");
+                        id = false;
+                        break;
+                }
+            } catch (IllegalArgumentException ex) {
+                System.out.println("Команда введена неверно " + command);
+                id = false;
             }
         }
         System.out.println("Размер списка = " + taskList.size());
@@ -75,8 +96,11 @@ public class MyTasks {
     }
 
     //удалить задачу из списка
-    private void delete() {
-
+    private void delete(int j) {
+        for (int i = j - 1; i < size - 1; i++) {
+            tasks[i] = tasks[i + 1];
+        }
+        size--;
     }
 }
 
