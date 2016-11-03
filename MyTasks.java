@@ -4,27 +4,35 @@ import java.util.*;
 import java.text.*;
 
 public class MyTasks {
-    final static int N = 10;
-    int size = 0;
     static Scanner sc = new Scanner(System.in);
-    private Task[] tasks = new Task[N];
     static SimpleDateFormat format1 = new SimpleDateFormat("dd.MM.yyyy hh:mm");
 
-    public enum Commands {
+    //перечисления команд управления списком
+    private enum Commands {
         ADD {
             public String toString() {
-                return "ADD";
+                return "add";
             }
         },
         DEL {
             public String toString() {
-                return "DEL";
+                return "del";
+            }
+        },
+        LIST {
+            public String toString() {
+                return "list";
+            }
+        },
+        CHANGE {
+            public String toString() {
+                return "change";
             }
         }
     }
 
-    public static void main(String[] args) throws IOException, ParseException {
-        MyTasks taskList = new MyTasks();
+    public static void main(String[] args) throws IOException {
+        ArrayList<Task> taskList = new ArrayList<Task>();
         boolean id = true;
         while (id) {
             System.out.println("Введите команду:");
@@ -32,75 +40,56 @@ public class MyTasks {
             try {
                 switch (Commands.valueOf(command)) {
                     case ADD:
-                        Task task1 = MyTasks.createtask();
-                        taskList.add(task1);
-                        id = true;
+                        Task task = Task.createTask();
+                        taskList.add(task);
                         break;
                     case DEL:
-                        System.out.println("кажите номер удаляемого элемента(число от 0 до size-1)");
+                        System.out.println("Укажите номер удаляемого элемента(число от 0 до size-1)");
                         int j = sc.nextInt();
-                        taskList.delete(j);
+                        taskList.remove(j);
                         break;
-                    default:
-                        System.out.println("Команда введена не верно");
-                        id = false;
+                    case LIST:
+                        System.out.println("Содержание списка задач:");
+                        for (int i = 0; i < taskList.size(); i++) {
+                            System.out.printf("  Название  %d-й задачи: %s\n", (i + 1), taskList.get(i).description);
+                            System.out.printf("  Дата выполнения %d-й задачи: %s\n", (i + 1), format1.format(taskList.get(i).date.getTime()));
+                        }
+                        break;
+                    case CHANGE:
+                        System.out.println("Укажите номер задачи из списка, которую нужно корректировать:");
+                        int n = sc.nextByte();
+                        if ((n>taskList.size())||(n<1)) {
+                            System.out.println("Задачи с таким номером не существует!");
+                        } else {
+                            changeTask(taskList.get(n-1));
+                        }
                         break;
                 }
             } catch (IllegalArgumentException ex) {
-                System.out.println("Команда введена неверно " + command);
+                System.out.println("Команда \"" + command + "\" введена неверно!");
                 id = false;
             }
         }
-        System.out.println("Размер списка = " + taskList.size());
+    }
 
-        for (int i = 0; i < taskList.size; i++) {
-            System.out.println("Данные " + (i + 1) + "-й задачи:");
-            taskList.print(taskList.tasks[i]);
+    //изменение параметров задач
+    private static Task changeTask(Task task) {
+        System.out.println("Желаете изменить название задачи?");
+        if (sc.nextBoolean()) {
+            System.out.println("Введите новое название задачи");
+            task.description = sc.next();
         }
-    }
-
-    // распечатка параметров задачи
-    private void print(Task task) {
-        System.out.println("    Дата выполнения задачи " + format1.format(task.date));
-        System.out.println("    Название задачи: " + task.description);
-    }
-
-    // Создание объекта задачи
-    private static Task createtask() throws IOException, ParseException {
-        System.out.println("Введите название задачи: ");
-        String description = sc.next();
-        Date date = new Date();
-        System.out.println("Введите дату выполнения задачи(dd.mm.yyyy): ");
-        String d = sc.next();
-        date = new SimpleDateFormat("yyyy-mm-dd").parse(d);
-        Task task = new Task(description, date);
+        System.out.println("Желаете изменить дату выполнения задачи?");
+        if (sc.nextBoolean()) {
+            System.out.println("Введите новую дату выполнения задачи");
+            Calendar date = new GregorianCalendar();
+            date.set(Calendar.YEAR, sc.nextInt());
+            date.set(Calendar.MONTH, sc.nextInt());
+            date.set(Calendar.DAY_OF_MONTH, sc.nextInt());
+            date.set(Calendar.HOUR, sc.nextInt());
+            date.set(Calendar.MINUTE, sc.nextInt());
+        }
         return task;
-    }
-
-    // добавить новую задачу в всписок задач
-    private void add(Task task) {
-        size++;
-        if (tasks.length < size) {
-            Task[] newtasks = new Task[(int) (tasks.length * 1.5)];
-            for (int i = 0; i < newtasks.length; i++) {
-                newtasks[i] = tasks[i];
-            }
-            tasks = newtasks;
-        }
-        tasks[size - 1] = task;
-    }
-
-    // размер списка
-    private int size() {
-        return size;
-    }
-
-    //удалить задачу из списка
-    private void delete(int j) {
-        for (int i = j - 1; i < size - 1; i++) {
-            tasks[i] = tasks[i + 1];
-        }
-        size--;
     }
 }
 
