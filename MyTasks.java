@@ -1,5 +1,5 @@
 
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.text.*;
 
@@ -42,6 +42,7 @@ public class MyTasks {
                     case ADD:
                         Task task = Task.createTask();
                         taskList.add(task);
+                        writeFile(task);
                         break;
                     case DEL:
                         System.out.println("Укажите номер удаляемого элемента(число от 0 до size-1)");
@@ -50,18 +51,15 @@ public class MyTasks {
                         break;
                     case LIST:
                         System.out.println("Содержание списка задач:");
-                        for (int i = 0; i < taskList.size(); i++) {
-                            System.out.printf("  Название  %d-й задачи: %s\n", (i + 1), taskList.get(i).description);
-                            System.out.printf("  Дата выполнения %d-й задачи: %s\n", (i + 1), format1.format(taskList.get(i).date.getTime()));
-                        }
+                        readFile();
                         break;
                     case CHANGE:
                         System.out.println("Укажите номер задачи из списка, которую нужно корректировать:");
                         int n = sc.nextByte();
-                        if ((n>taskList.size())||(n<1)) {
+                        if ((n > taskList.size()) || (n < 1)) {
                             System.out.println("Задачи с таким номером не существует!");
                         } else {
-                            changeTask(taskList.get(n-1));
+                            changeTask(taskList.get(n - 1));
                         }
                         break;
                 }
@@ -90,6 +88,28 @@ public class MyTasks {
             date.set(Calendar.MINUTE, sc.nextInt());
         }
         return task;
+    }
+
+    private static void writeFile(Task task) {
+        try (FileWriter writer = new FileWriter("C://test.txt", true)) {
+            String text = task.description + " " + format1.format(task.date.getTime()) + "\n";
+            writer.write(text);
+            writer.append('|');
+            writer.flush();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    private static void readFile() {
+        try (FileReader reader = new FileReader("C://test.txt")) {
+            int c;
+            while ((c = reader.read()) != '|') {
+                System.out.print((char) c);
+            }
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }
 
