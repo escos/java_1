@@ -91,24 +91,57 @@ public class MyTasks {
     }
 
     private static void writeFile(Task task) {
-        try (FileWriter writer = new FileWriter("C://test.txt", true)) {
-            String text = task.description + " " + format1.format(task.date.getTime()) + "\n";
-            writer.write(text);
-            writer.append('|');
-            writer.flush();
+        try (FileWriter writer1 = new FileWriter("C://description.txt", true)) {
+            String text1 = task.description;
+            writer1.write(text1);
+            writer1.write("\n");
+            //writer.append('|');
+            writer1.flush();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-    }
-
-    private static void readFile() {
-        try (FileReader reader = new FileReader("C://test.txt")) {
-            int c;
-            while ((c = reader.read()) != '|') {
-                System.out.print((char) c);
-            }
+        try (FileWriter writer2 = new FileWriter("C://date.txt", true)) {
+            String text2 =  format1.format(task.date.getTime());
+            writer2.write(text2);
+            writer2.write("\n");
+            //writer.append('|');
+            writer2.flush();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
+        }
+
+    }
+
+    private static String readDescriptionFile() throws ParseException {
+        Task task = Task.createTask();
+        try (BufferedReader br = new BufferedReader(new FileReader("C:\\description.txt"))) {
+            //чтение построчно
+            while ( br.readLine() != null) {
+                System.out.println(br.readLine());
+                task.description = br.readLine();
+            }
+            return task.description;
+        } catch (IOException ex) {
+
+            System.out.println(ex.getMessage());
+            return task.description;
+        }
+    }
+
+    private static Calendar readDateFile() throws ParseException {
+        Task task = Task.createTask();
+        try (BufferedReader br = new BufferedReader(new FileReader("C:\\date.txt"))) {
+            //чтение построчно
+            while ( br.readLine() != null) {
+                System.out.println(br.readLine());
+                Calendar cal =
+                task.description = br.readLine();
+            }
+            return task.date;
+        } catch (IOException ex) {
+
+            System.out.println(ex.getMessage());
+            return task.date;
         }
     }
 }
