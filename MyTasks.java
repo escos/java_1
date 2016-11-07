@@ -51,7 +51,8 @@ public class MyTasks {
                         break;
                     case LIST:
                         System.out.println("Содержание списка задач:");
-                        System.out.println(readListFile());
+                        task = MyTasks.parseDateAndDescription(readListFile());
+                        System.out.println("Задача: " + task.description + " дата выполнения: " + format1.format(task.date.getTime()));
                         break;
                     case CHANGE:
                         System.out.println("Укажите номер задачи из списка, которую нужно корректировать:");
@@ -94,7 +95,7 @@ public class MyTasks {
 
     private static void writeFile(Task task) {
         try (FileWriter writer1 = new FileWriter("C://test.txt", true)) {
-            writer1.write(task.description+" "+format1.format(task.date.getTime()));
+            writer1.write(task.description + " " + format1.format(task.date.getTime()));
             writer1.write(System.lineSeparator());
             writer1.flush();
             writer1.close();
@@ -102,23 +103,31 @@ public class MyTasks {
             System.out.println(ex.getMessage());
         }
     }
+
     // читаем файла задачи в список строк
     private static String readListFile() throws ParseException {
-        File f = new File("C:\\test.txt");
-        try (FileReader fr = new FileReader(f)) {
-            char[] buffer = new char[(int)f.length()];
-            // считаем файл полностью
-            fr.read(buffer);
-            return new String(buffer);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            return "mistake";
+        try {
+            File file = new File("C:\\test.txt");
+            FileReader fr = new FileReader(file);
+            BufferedReader reader = new BufferedReader(fr);
+            String line = reader.readLine();
+            //while (line != null) {
+              //  line = reader.readLine();
+            //}
+            return line;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return "-1";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "-1";
         }
     }
 
+    //
     private static Task parseDateAndDescription(String s) {
         String s1 = s.substring(s.length() - 16);
-        String description = s.substring(0,s.length()-16);
+        String description = s.substring(0, s.length() - 16);
         Calendar cal;
         try {
             cal = Calendar.getInstance();
