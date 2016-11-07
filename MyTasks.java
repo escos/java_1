@@ -31,8 +31,16 @@ public class MyTasks {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        ArrayList<Task> taskList = new ArrayList<Task>();
+    public static void main(String[] args) throws IOException, ParseException {
+        ArrayList<Task> taskList = new ArrayList<>();
+        ArrayList<String> s = readListFile();
+        System.out.println(s.size());
+        for (int i = 0; i < s.size() ; i++) {
+            System.out.println(s.get(i));
+            taskList.add(parseDateAndDescription(s.get(i)));
+            System.out.println("Задача: " + taskList.get(i).description + " дата выполнения: " + format1.format(taskList.get(i).date.getTime()));
+        }
+
         boolean id = true;
         while (id) {
             System.out.println("Введите команду:");
@@ -51,8 +59,12 @@ public class MyTasks {
                         break;
                     case LIST:
                         System.out.println("Содержание списка задач:");
-                        Task task1 = MyTasks.parseDateAndDescription(readListFile());
-                        System.out.println("Задача: " + task1.description + " дата выполнения: " + format1.format(task1.date.getTime()));
+                         s = readListFile();
+                        for (int i = 0; i < s.size(); i++) {
+                            Task task1 = MyTasks.parseDateAndDescription(s.get(i));
+                            taskList.add(task1);
+                            System.out.println("Задача: " + taskList.get(i).description + " дата выполнения: " + format1.format(task1.date.getTime()));
+                        }
                         break;
                     case CHANGE:
                         System.out.println("Укажите номер задачи из списка, которую нужно корректировать:");
@@ -60,7 +72,7 @@ public class MyTasks {
                         if ((n > taskList.size()) || (n < 1)) {
                             System.out.println("Задачи с таким номером не существует!");
                         } else {
-                            changeTask(taskList.get(n - 1));
+                            changeTask(MyTasks.parseDateAndDescription(s.get(n-1)));
                         }
                         break;
                 }
@@ -105,23 +117,24 @@ public class MyTasks {
     }
 
     // читаем файла задачи в список строк
-    private static String readListFile() throws ParseException {
+    private static ArrayList readListFile() throws ParseException {
+        ArrayList<String> s = new ArrayList<>();
         try {
             File file = new File("C:\\test.txt");
             FileReader fr = new FileReader(file);
             BufferedReader reader = new BufferedReader(fr);
-            String line = reader.readLine();
-            //while (line != null) {
-              //  line = reader.readLine();
-            //}
-            return line;
+            int i = 0;
+            while (reader.readLine() != null) {
+                s.add(i, reader.readLine());
+                i++;
+            }
+            return s;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            return "-1";
         } catch (IOException e) {
             e.printStackTrace();
-            return "-1";
         }
+        return s;
     }
 
     //
