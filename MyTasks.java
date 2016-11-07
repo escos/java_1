@@ -51,7 +51,7 @@ public class MyTasks {
                         break;
                     case LIST:
                         System.out.println("Содержание списка задач:");
-                        readFile();
+                        System.out.println(readListFile());
                         break;
                     case CHANGE:
                         System.out.println("Укажите номер задачи из списка, которую нужно корректировать:");
@@ -66,6 +66,8 @@ public class MyTasks {
             } catch (IllegalArgumentException ex) {
                 System.out.println("Команда \"" + command + "\" введена неверно!");
                 id = false;
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -91,58 +93,41 @@ public class MyTasks {
     }
 
     private static void writeFile(Task task) {
-        try (FileWriter writer1 = new FileWriter("C://description.txt", true)) {
-            String text1 = task.description;
-            writer1.write(text1);
-            writer1.write("\n");
-            //writer.append('|');
+        try (FileWriter writer1 = new FileWriter("C://test.txt", true)) {
+            writer1.write(task.description+" "+format1.format(task.date.getTime()));
+            writer1.write(System.lineSeparator());
             writer1.flush();
+            writer1.close();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-        try (FileWriter writer2 = new FileWriter("C://date.txt", true)) {
-            String text2 =  format1.format(task.date.getTime());
-            writer2.write(text2);
-            writer2.write("\n");
-            //writer.append('|');
-            writer2.flush();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-
     }
-
-    private static String readDescriptionFile() throws ParseException {
-        Task task = Task.createTask();
-        try (BufferedReader br = new BufferedReader(new FileReader("C:\\description.txt"))) {
-            //чтение построчно
-            while ( br.readLine() != null) {
-                System.out.println(br.readLine());
-                task.description = br.readLine();
-            }
-            return task.description;
+    // читаем файла задачи в список строк
+    private static String readListFile() throws ParseException {
+        File f = new File("C:\\test.txt");
+        try (FileReader fr = new FileReader(f)) {
+            char[] buffer = new char[(int)f.length()];
+            // считаем файл полностью
+            fr.read(buffer);
+            return new String(buffer);
         } catch (IOException ex) {
-
             System.out.println(ex.getMessage());
-            return task.description;
+            return "mistake";
         }
     }
 
-    private static Calendar readDateFile() throws ParseException {
-        Task task = Task.createTask();
-        try (BufferedReader br = new BufferedReader(new FileReader("C:\\date.txt"))) {
-            //чтение построчно
-            while ( br.readLine() != null) {
-                System.out.println(br.readLine());
-                Calendar cal =
-                task.description = br.readLine();
-            }
-            return task.date;
-        } catch (IOException ex) {
-
-            System.out.println(ex.getMessage());
-            return task.date;
+    private static Task parseDateAndDescription(String s) {
+        String s1 = s.substring(s.length() - 16);
+        String description = s.substring(0,s.length()-16);
+        Calendar cal;
+        try {
+            cal = Calendar.getInstance();
+            cal.setTime(format1.parse(s1));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            cal = null;
         }
+        return new Task(description, cal);
     }
 }
 
