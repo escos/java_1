@@ -51,8 +51,8 @@ public class MyTasks {
                         break;
                     case LIST:
                         System.out.println("Содержание списка задач:");
-                        task = MyTasks.parseDateAndDescription(readListFile());
-                        System.out.println("Задача: " + task.description + " дата выполнения: " + format1.format(task.date.getTime()));
+                        Task task1 = MyTasks.parseDateAndDescription(readListFile());
+                        System.out.println("Задача: " + task1.description + " дата выполнения: " + format1.format(task1.date.getTime()));
                         break;
                     case CHANGE:
                         System.out.println("Укажите номер задачи из списка, которую нужно корректировать:");
