@@ -1,9 +1,13 @@
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.text.*;
 
 public class MyTasks {
+    public static final String FILENAME = "C:\\test.txt";
     static Scanner sc = new Scanner(System.in);
     static SimpleDateFormat format1 = new SimpleDateFormat("dd.MM.yyyy hh:mm");
 
@@ -32,16 +36,8 @@ public class MyTasks {
     }
 
     public static void main(String[] args) throws IOException, ParseException {
-        ArrayList<Task> taskList = new ArrayList<>();
-        ArrayList<String> s = readListFile();
-        if (s != null) {
-            System.out.println(s.size());
-            for (int i = 0; i < s.size(); i++) {
-                System.out.println(s.get(i));
-                taskList.add(parseDateAndDescription(s.get(i)));
-                System.out.println("Задача: " + taskList.get(i).description + " дата выполнения: " + format1.format(taskList.get(i).date.getTime()));
-            }
-        }
+        List<Task> taskList = readFromFile();
+                printTaskList(taskList);
 
         boolean id = true;
         while (id) {
@@ -64,30 +60,63 @@ public class MyTasks {
                         break;
                     case LIST:
                         System.out.println("Содержание списка задач:");
-                        s = readListFile();
-                        for (int i = 0; i < s.size(); i++) {
-                            Task task1 = MyTasks.parseDateAndDescription(s.get(i));
-                            taskList.add(task1);
-                            System.out.println("Задача: " + taskList.get(i).description + " дата выполнения: " + format1.format(task1.date.getTime()));
-                        }
+                        taskList.clear();
+                        taskList = readFromFile();
+                        printTaskList(taskList);
                         break;
                     case CHANGE:
                         System.out.println("Укажите номер задачи из списка, которую нужно корректировать:");
                         int n = sc.nextByte();
+                        taskList = readFromFile();
+
                         if ((n > taskList.size()) || (n < 1)) {
                             System.out.println("Задачи с таким номером не существует!");
                         } else {
-                            changeTask(MyTasks.parseDateAndDescription(s.get(n - 1)));
+                            changeTask(taskList.get(n - 1));
+                            writeToFile(taskList);
                         }
                         break;
                 }
             } catch (IllegalArgumentException ex) {
                 System.out.println("Команда \"" + command + "\" введена неверно!");
                 id = false;
-            } catch (ParseException e) {
-                e.printStackTrace();
             }
         }
+    }
+
+    private static void writeToFile(List<Task> taskList) {
+        try(BufferedWriter writer = Files.newBufferedWriter(Paths.get(FILENAME), StandardCharsets.UTF_8)){
+            for (Task task : taskList) {
+                writer.write(task.description + " " + format1.format(task.date.getTime()));
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static void printTaskList(List<Task> taskList) {
+        System.out.println("Задач: " + taskList.size());
+        for (int i = 0; i <taskList.size(); i++) {
+            System.out.println("Задача "  + i+ ": " + taskList.get(i).description + " дата выполнения: " + format1.format(taskList.get(i).date.getTime()));
+        }
+    }
+
+    private static List<Task> readFromFile() {
+        List<String> s = readListFile();
+        if (s != null) {
+            return toTasks(s);
+        }
+        return Collections.emptyList();
+    }
+
+    private static List<Task> toTasks(List<String> s) {
+        List<Task> taskList = new ArrayList<>();
+        for (int i = 0; i < s.size(); i++) {
+            taskList.add(parseDateAndDescription(s.get(i)));
+        }
+        return taskList;
     }
 
     //изменение параметров задач
@@ -122,24 +151,14 @@ public class MyTasks {
     }
 
     // читаем файла задачи в список строк
-    private static ArrayList readListFile() throws ParseException {
-        ArrayList<String> s = new ArrayList<>();
+    private static List<String> readListFile() {
+            // Files.readAllLines()
         try {
-            File file = new File("C:\\test.txt");
-            FileReader fr = new FileReader(file);
-            BufferedReader reader = new BufferedReader(fr);
-            int i = 0;
-            while (reader.readLine() != null) {
-                s.add(i, reader.readLine());
-                i++;
-            }
-            return s;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            return Files.readAllLines(Paths.get(FILENAME), StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
+            return Collections.emptyList();
         }
-        return s;
     }
 
     //parsing данных из файла
@@ -163,7 +182,7 @@ public class MyTasks {
             try {
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.DATE, -1);
-                if (tasks.get(i).date.before(calendar.getInstance())) {
+                if (tasks.get(i).date.before(calendar)) {
                     System.out.println("НАПОМИНАНИЕ: ДО ВЫПОЛНЕНИЯ " + i + " ЗАДАЧИ ОСТАЛСЯ 1 ДЕНЬ.");
                 }
             } catch (Exception e) {

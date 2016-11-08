@@ -31,5 +31,12 @@ public class Task {
         }
         return new Task(description, date);
     }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "description='" + description + '\'' +
+                '}';
+    }
 }
 
