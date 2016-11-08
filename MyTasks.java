@@ -34,11 +34,13 @@ public class MyTasks {
     public static void main(String[] args) throws IOException, ParseException {
         ArrayList<Task> taskList = new ArrayList<>();
         ArrayList<String> s = readListFile();
-        System.out.println(s.size());
-        for (int i = 0; i < s.size() ; i++) {
-            System.out.println(s.get(i));
-            taskList.add(parseDateAndDescription(s.get(i)));
-            System.out.println("Задача: " + taskList.get(i).description + " дата выполнения: " + format1.format(taskList.get(i).date.getTime()));
+        if (s != null) {
+            System.out.println(s.size());
+            for (int i = 0; i < s.size(); i++) {
+                System.out.println(s.get(i));
+                taskList.add(parseDateAndDescription(s.get(i)));
+                System.out.println("Задача: " + taskList.get(i).description + " дата выполнения: " + format1.format(taskList.get(i).date.getTime()));
+            }
         }
 
         boolean id = true;
@@ -56,10 +58,13 @@ public class MyTasks {
                         System.out.println("Укажите номер удаляемого элемента(число от 0 до size-1)");
                         int j = sc.nextInt();
                         taskList.remove(j);
+                        for (int i = 0; i < taskList.size(); i++) {
+                            System.out.printf("Задача: %s , дата выполнения: %s ", taskList.get(i).description, format1.format(taskList.get(i).date.getTime()));
+                        }
                         break;
                     case LIST:
                         System.out.println("Содержание списка задач:");
-                         s = readListFile();
+                        s = readListFile();
                         for (int i = 0; i < s.size(); i++) {
                             Task task1 = MyTasks.parseDateAndDescription(s.get(i));
                             taskList.add(task1);
@@ -72,7 +77,7 @@ public class MyTasks {
                         if ((n > taskList.size()) || (n < 1)) {
                             System.out.println("Задачи с таким номером не существует!");
                         } else {
-                            changeTask(MyTasks.parseDateAndDescription(s.get(n-1)));
+                            changeTask(MyTasks.parseDateAndDescription(s.get(n - 1)));
                         }
                         break;
                 }
@@ -137,7 +142,7 @@ public class MyTasks {
         return s;
     }
 
-    //
+    //parsing данных из файла
     private static Task parseDateAndDescription(String s) {
         String s1 = s.substring(s.length() - 16);
         String description = s.substring(0, s.length() - 16);
@@ -150,6 +155,21 @@ public class MyTasks {
             cal = null;
         }
         return new Task(description, cal);
+    }
+
+    // проверка даты и времени выполния задач
+    public static void checkDates(ArrayList<Task> tasks) {
+        for (int i = 0; i < tasks.size(); i++) {
+            try {
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DATE, -1);
+                if (tasks.get(i).date.before(calendar.getInstance())) {
+                    System.out.println("НАПОМИНАНИЕ: ДО ВЫПОЛНЕНИЯ " + i + " ЗАДАЧИ ОСТАЛСЯ 1 ДЕНЬ.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 
