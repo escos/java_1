@@ -13,31 +13,15 @@ public class MyTasks {
 
     //перечисления команд управления списком
     private enum Commands {
-        ADD {
-            public String toString() {
-                return "add";
-            }
-        },
-        DEL {
-            public String toString() {
-                return "del";
-            }
-        },
-        LIST {
-            public String toString() {
-                return "list";
-            }
-        },
-        CHANGE {
-            public String toString() {
-                return "change";
-            }
-        }
+        ADD,
+        DEL,
+        LIST,
+        CHANGE
     }
 
     public static void main(String[] args) throws IOException, ParseException {
         List<Task> taskList = readFromFile();
-                printTaskList(taskList);
+        printTaskList(taskList);
 
         boolean id = true;
         while (id) {
@@ -53,9 +37,13 @@ public class MyTasks {
                     case DEL:
                         System.out.println("Укажите номер удаляемого элемента(число от 0 до size-1)");
                         int j = sc.nextInt();
-                        taskList.remove(j);
-                        for (int i = 0; i < taskList.size(); i++) {
-                            System.out.printf("Задача: %s , дата выполнения: %s ", taskList.get(i).description, format1.format(taskList.get(i).date.getTime()));
+                        if ((j >= 0) && (j < taskList.size())) {
+                            taskList.remove(j);
+                            for (int i = 0; i < taskList.size(); i++) {
+                                System.out.printf("Задача: %s , дата выполнения: %s ", taskList.get(i).description, format1.format(taskList.get(i).date.getTime()));
+                            }
+                        } else {
+                            System.out.println("Номер задачи введен не верно!");
                         }
                         break;
                     case LIST:
@@ -68,7 +56,6 @@ public class MyTasks {
                         System.out.println("Укажите номер задачи из списка, которую нужно корректировать:");
                         int n = sc.nextByte();
                         taskList = readFromFile();
-
                         if ((n > taskList.size()) || (n < 1)) {
                             System.out.println("Задачи с таким номером не существует!");
                         } else {
@@ -85,7 +72,7 @@ public class MyTasks {
     }
 
     private static void writeToFile(List<Task> taskList) {
-        try(BufferedWriter writer = Files.newBufferedWriter(Paths.get(FILENAME), StandardCharsets.UTF_8)){
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(FILENAME), StandardCharsets.UTF_8)) {
             for (Task task : taskList) {
                 writer.write(task.description + " " + format1.format(task.date.getTime()));
                 writer.newLine();
@@ -95,11 +82,11 @@ public class MyTasks {
         }
 
     }
-
+    // распечатка списка задач
     private static void printTaskList(List<Task> taskList) {
         System.out.println("Задач: " + taskList.size());
-        for (int i = 0; i <taskList.size(); i++) {
-            System.out.println("Задача "  + i+ ": " + taskList.get(i).description + " дата выполнения: " + format1.format(taskList.get(i).date.getTime()));
+        for (int i = 0; i < taskList.size(); i++) {
+            System.out.println("Задача " + i + ": " + taskList.get(i).description + " дата выполнения: " + format1.format(taskList.get(i).date.getTime()));
         }
     }
 
@@ -138,7 +125,7 @@ public class MyTasks {
         }
         return task;
     }
-
+    // запись в файл задачи
     private static void writeFile(Task task) {
         try (FileWriter writer1 = new FileWriter("C://test.txt", true)) {
             writer1.write(task.description + " " + format1.format(task.date.getTime()));
@@ -150,9 +137,9 @@ public class MyTasks {
         }
     }
 
-    // читаем файла задачи в список строк
+    // читаем из файла задачи в список строк
     private static List<String> readListFile() {
-            // Files.readAllLines()
+        // Files.readAllLines()
         try {
             return Files.readAllLines(Paths.get(FILENAME), StandardCharsets.UTF_8);
         } catch (IOException e) {
@@ -183,7 +170,7 @@ public class MyTasks {
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.DATE, -1);
                 if (tasks.get(i).date.before(calendar)) {
-                    System.out.println("НАПОМИНАНИЕ: ДО ВЫПОЛНЕНИЯ " + i + " ЗАДАЧИ ОСТАЛСЯ 1 ДЕНЬ.");
+                    System.out.println("НАПОМИНАНИЕ: ДО ВЫПОЛНЕНИЯ " + i + " ЗАДАЧИ ОСТАЛОСЬ МЕНЕЕ 1 ДНЯ.");
                 }
             } catch (Exception e) {
                 e.printStackTrace();

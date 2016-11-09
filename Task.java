@@ -15,14 +15,14 @@ public class Task {
 
     public static Task createTask() {
         System.out.println("Введите название задачи: ");
-        String description = sc.next();
+        String description = sc.nextLine();
         Calendar date = new GregorianCalendar();
         while (true) {
-            //System.out.println("Введите дату выполнения задачи(dd.mm.yyyy): ");
+            //System.out.println("Введите дату выполнения задачи в формате(dd.mm.yyyy hh:mm:ss): ");
             Calendar current = Calendar.getInstance();
-            date.set(Calendar.YEAR, 2017);
-            date.set(Calendar.MONTH, gen.nextInt(11));
-            date.set(Calendar.DAY_OF_MONTH, gen.nextInt(31));
+            date.set(Calendar.YEAR, 2016);
+            date.set(Calendar.MONTH, 11);
+            date.set(Calendar.DAY_OF_MONTH, gen.nextInt(23)+9);
             date.set(Calendar.HOUR, gen.nextInt(24));
             date.set(Calendar.MINUTE, gen.nextInt(59));
             if (date.after(current))
