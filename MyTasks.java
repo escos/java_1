@@ -22,7 +22,6 @@ public class MyTasks {
     public static void main(String[] args) throws IOException, ParseException {
         List<Task> taskList = readFromFile();
         printTaskList(taskList);
-
         boolean id = true;
         while (id) {
             System.out.println("Введите команду:");
@@ -82,15 +81,16 @@ public class MyTasks {
         }
 
     }
+
     // распечатка списка задач
-    private static void printTaskList(List<Task> taskList) {
+    public static void printTaskList(List<Task> taskList) {
         System.out.println("Задач: " + taskList.size());
         for (int i = 0; i < taskList.size(); i++) {
             System.out.println("Задача " + i + ": " + taskList.get(i).description + " дата выполнения: " + format1.format(taskList.get(i).date.getTime()));
         }
     }
 
-    private static List<Task> readFromFile() {
+    public static List<Task> readFromFile() {
         List<String> s = readListFile();
         if (s != null) {
             return toTasks(s);
@@ -125,6 +125,7 @@ public class MyTasks {
         }
         return task;
     }
+
     // запись в файл задачи
     private static void writeFile(Task task) {
         try (FileWriter writer1 = new FileWriter("C://test.txt", true)) {
@@ -168,7 +169,7 @@ public class MyTasks {
         for (int i = 0; i < tasks.size(); i++) {
             try {
                 Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.DATE, -1);
+                calendar.add(Calendar.DAY_OF_MONTH, +1);
                 if (tasks.get(i).date.before(calendar)) {
                     System.out.println("НАПОМИНАНИЕ: ДО ВЫПОЛНЕНИЯ " + i + " ЗАДАЧИ ОСТАЛОСЬ МЕНЕЕ 1 ДНЯ.");
                 }
