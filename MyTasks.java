@@ -171,7 +171,7 @@ public class MyTasks {
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.DAY_OF_MONTH, +1);
                 if (tasks.get(i).date.before(calendar)) {
-                    System.out.println("НАПОМИНАНИЕ: ДО ВЫПОЛНЕНИЯ " + i + " ЗАДАЧИ ОСТАЛОСЬ МЕНЕЕ 1 ДНЯ.");
+                    System.out.println("НАПОМИНАНИЕ: ДО ВЫПОЛНЕНИЯ " + i + "-Й ЗАДАЧИ ОСТАЛОСЬ МЕНЕЕ 1 ДНЯ.");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
