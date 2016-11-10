@@ -5,8 +5,7 @@ public class MyStek {
     static Random gen = new Random();
     static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
-        System.out.println("Ведите максимальное количество элементов(необходимо ввести целое число > 2)");
-        new MyThread();
+        System.out.println("Введите максимальное количество элементов(необходимо ввести целое число > 2)");
         int N = sc.nextInt();
         Stack myStack = new Stack(N);
         Stack replyStack = new Stack(N);

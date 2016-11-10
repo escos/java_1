@@ -10,19 +10,19 @@ class Stack {
         top = -1;
     }
 
-    public void addElement(int element) {
+    void addElement(int element) {
         stackArray[++top] = element;
     }
 
-    public int deleteElement() {
+    int deleteElement() {
         return stackArray[top--];
     }
 
-    public int getTop() {
+    int getTop() {
         return stackArray[top];
     }
 
-    public boolean stackEmpty() {
+    boolean stackEmpty() {
         return (top == -1);
     }
 }
