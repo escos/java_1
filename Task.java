@@ -20,6 +20,7 @@ public class Task {
         while (true) {
             //System.out.println("Введите дату выполнения задачи в формате(dd.mm.yyyy hh:mm:ss): ");
             Calendar current = Calendar.getInstance();
+            //для проверки работоспособности дата вводится автоматически
             date.set(Calendar.YEAR, 2016);
             date.set(Calendar.MONTH, 11);
             date.set(Calendar.DAY_OF_MONTH, gen.nextInt(23)+9);
@@ -30,13 +31,6 @@ public class Task {
             else System.out.println("Ошибка, необходимо ввести дату выполнения задачи позже текущей");
         }
         return new Task(description, date);
-    }
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "description='" + description + '\'' +
-                '}';
     }
 }
 

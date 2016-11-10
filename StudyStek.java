@@ -1,23 +1,23 @@
 
 
-public class StudyStek<T> {
+public class StudyStek<String> {
     Element top = null;
 
-    public void push(T value) {
+    public void push(String value) {
         Element e = new Element();
         e.value = value;
         e.next = top;
         top = e;
     }
 
-    public T pop() {
-        T value = top.value;
+    public String pop() {
+        String value = top.value;
         top = top.next;
         return value;
     }
 
     private class Element {
-        T value;
+        String value;
         Element next;
     }
 
