@@ -8,7 +8,9 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class SimpleBot extends TelegramLongPollingBot {
@@ -39,12 +41,29 @@ public class SimpleBot extends TelegramLongPollingBot {
         Message message = update.getMessage();
         List<Task> taskList = MyTasks.readFromFile();
         if (message != null && message.hasText()) {
-            if (message.getText().equals("list")) {
-                MyTasks.printTaskList(taskList);
-                sendMsg(message, "Всего задач: " + taskList.size());
-                for (int i = 0; i < taskList.size(); i++) {
-                    sendMsg(message, "Задача " + i + ": " + taskList.get(i).description + " дата выполнения: " + format1.format(taskList.get(i).date.getTime()));
-                }
+            switch (message.getText()) {
+                case "list":
+                    MyTasks.printTaskList(taskList);
+                    sendMsg(message, "Всего задач: " + taskList.size());
+                    for (int i = 0; i < taskList.size(); i++) {
+                        sendMsg(message, "Задача " + i + ": " + taskList.get(i).description + " дата выполнения: " + format1.format(taskList.get(i).date.getTime()));
+                    }
+                    break;
+                case "date":
+                    for (int i = 0; i < taskList.size(); i++) {
+                        try {
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.add(Calendar.DAY_OF_MONTH, +1);
+                            if (taskList.get(i).date.before(calendar)) {
+                                sendMsg(message,"НАПОМИНАНИЕ: ДО ВЫПОЛНЕНИЯ " + i + "-Й ЗАДАЧИ ОСТАЛОСЬ МЕНЕЕ 1 ДНЯ.");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                default:
+                    sendMsg(message,"Команда введена не верно!");
             }
         } else
             sendMsg(message, "Я не знаю что ответить на это");

@@ -163,7 +163,7 @@ public class MyTasks {
     }
 
     // проверка даты и времени выполния задач
-    public static void checkDates(ArrayList<Task> tasks) {
+    public static void checkDates(List<Task> tasks) {
         for (int i = 0; i < tasks.size(); i++) {
             try {
                 Calendar calendar = Calendar.getInstance();

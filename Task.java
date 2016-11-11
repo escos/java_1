@@ -22,8 +22,8 @@ public class Task {
             Calendar current = Calendar.getInstance();
             //для проверки работоспособности дата вводится автоматически
             date.set(Calendar.YEAR, 2016);
-            date.set(Calendar.MONTH, 11);
-            date.set(Calendar.DAY_OF_MONTH, gen.nextInt(23)+9);
+            date.set(Calendar.MONTH, 10);
+            date.set(Calendar.DAY_OF_MONTH, gen.nextInt(2)+12);
             date.set(Calendar.HOUR, gen.nextInt(24));
             date.set(Calendar.MINUTE, gen.nextInt(59));
             if (date.after(current))
@@ -34,3 +34,16 @@ public class Task {
     }
 }
 
+enum Kind {
+    HERBIVORE("травоядное"), PREDATOR("хищное");
+
+    String russianText;
+
+    public String getRussianText() {
+        return russianText;
+    }
+
+    Kind(String russianText) {
+        this.russianText = russianText;
+    }
+}
