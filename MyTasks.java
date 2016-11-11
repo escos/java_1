@@ -38,9 +38,7 @@ public class MyTasks {
                         int j = sc.nextInt();
                         if ((j >= 0) && (j < taskList.size())) {
                             taskList.remove(j);
-                            for (int i = 0; i < taskList.size(); i++) {
-                                System.out.printf("Задача: %s , дата выполнения: %s ", taskList.get(i).description, format1.format(taskList.get(i).date.getTime()));
-                            }
+                            printTaskList(taskList);
                         } else {
                             System.out.println("Номер задачи введен не верно!");
                         }
